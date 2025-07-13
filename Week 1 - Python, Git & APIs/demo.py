@@ -1,13 +1,17 @@
+"""Please note that this script underwent various edits and my scope of 
+practice is not limited to only the most recent changes."""
+
 import requests
+from bs4 import BeautifulSoup
 import os
+from urllib.parse import urljoin
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, 'circuit_diagram.png')
+webapage_url = 'https://en.wikipedia.org/wiki/Bill_Gates'
 
-r = requests.get('https://imgs.xkcd.com/comics/circuit_diagram.png')
+r = requests.get(webapage_url)
+soup = BeautifulSoup(r.text, 'html.parser')
 
-print(r.content)
+# Find the first image in the webpage
+img_tag = soup.find('img')
 
-with open(file_path, 'wb') as f:
-    f.write(r.content)
-print("Image downloaded and saved as 'circuit_diagram.png'")
+print(img_tag)
