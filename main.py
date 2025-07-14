@@ -4,4 +4,11 @@ app = FastAPI()
 
 @app.get('/')
 def index():
-    return 'Welcome to my first FastAPI app!'
+    return [
+    {
+        "type": "command",
+        "details": {
+            "key": "python.execInTerminal"
+        }
+    }
+]
