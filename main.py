@@ -13,5 +13,5 @@ def intro():
     return "This is a simple FastAPI application that returns a greeting message."
 
 @app.get("/comment/{id}")
-def intro(id: str):
-    return id
+def comment(id: str):
+    return {"commnent": {"id": id, "text": "This is a comment."}}
