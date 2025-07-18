@@ -15,3 +15,8 @@ def intro():
 @app.get("/comment/{id}")
 def comment(id: str):
     return {"commnent": {"id": id, "text": "This is a comment."}}
+
+@app.get("/blog")
+
+def blog(name, base):
+    return {"blog": {"title": "My First Blog", "content": "This is the content of my first blog."}}
