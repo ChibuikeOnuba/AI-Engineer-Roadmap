@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from typing import Optional
 
 app = FastAPI()
 
@@ -18,5 +19,9 @@ def comment(id: int):
 
 @app.get("/blog")
 
-def blog(limit: int=10, base: int=1):
-    return {"blog": {f"This prints {limit+base} number of blogs by default"}}
+def blog(limit: int =10, base: int=1, published: bool = False, sort: Optional[int] = None):
+
+    if published:
+        return {"blog": {f"This prints {limit+base} {published} number of blogs by default"}}
+    else:
+        return {"blog": {f"Limit is {sort}"}} 
