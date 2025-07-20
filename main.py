@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from typing import Optional
-from pydantic import BaseModel
+import schema
 
 app = FastAPI()
 
@@ -30,13 +30,16 @@ def blog(limit: int =10, base: int=1, published: bool = False, sort: Optional[in
 
 # _____________________________POST REQUESTS_____________________________
 
-class model(BaseModel):
-    title: str
-    body: str
-    published: Optional[bool] = True
+
+# @app.post("/create")
+
+# def create(title: str, body: Optional[str] = None):
+#     return {'title': title, 'body': body}
+
+# _________ The method above is outdated and improved using the Pydantic BaseModel (which creates a blueprint for the function)____________
 
 
-@app.post("/blog")
+@app.post("/create")
 
-def create_blog(request:model):
-    return {"messsage": f"The title of the blog is {request.title} and the body is {request.body}"}
+def create_blog(request: schema.model):
+    return {request.title}
