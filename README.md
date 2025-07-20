@@ -56,8 +56,8 @@ This project follows a **step-by-step** approach to build a fully functioning AP
 
 1. **Clone the Repo**
    ```bash
-   git clone https://github.com/bitfumes/fastapi-course
-   cd fastapi-course
+   git clone https://github.com/ChibuikeOnuba/AI-Engineer-Roadmap
+   cd fastapi blog api
    ```
 
 2. **Create a Virtual Environment**
@@ -77,7 +77,7 @@ This project follows a **step-by-step** approach to build a fully functioning AP
 
 5. **Run the App**
    ```bash
-   uvicorn app.main:app --reload
+   uvicorn main:app --reload
    ```
 
 6. **Explore the API Docs**
