@@ -1,8 +1,10 @@
 from database import Base
-from sqlalchemy import String, integer, Column
+from sqlalchemy import String, Integer, Column
 
 class Blog(Base):
-    id = Column(integer, primary_key=True, index=True)
+
+    __tablename__ = "blogs"
+    id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
     body = Column(String)
 
