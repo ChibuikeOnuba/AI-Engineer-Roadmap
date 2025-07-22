@@ -11,7 +11,6 @@ def get_db():
     db = SessionLocal()
     try:
         yield db
-
     finally:
         db.close()
 
@@ -19,4 +18,4 @@ def get_db():
 @app.post('/blog')
 
 def create_blog(request:schema.model, db: Session = Depends(get_db)):
-    return db
+    return request.title, request.body
