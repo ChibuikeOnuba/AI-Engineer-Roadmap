@@ -32,6 +32,6 @@ def create_blog(request:schema.model, db: Session = Depends(get_db)):
 @app.get('/blog')
 
 def get_blog(db: Session = Depends(get_db)):
-    db.get()
-    return db
+    blogs = db.query(models.Blog).all()
+    return blogs
     
