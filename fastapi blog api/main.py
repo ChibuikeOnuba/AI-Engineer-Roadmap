@@ -14,6 +14,7 @@ def get_db():
     finally:
         db.close()
 
+# _________________ POSTING TO THE DATABASE _________________________
 
 @app.post('/blog')
 
@@ -23,3 +24,14 @@ def create_blog(request:schema.model, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_blog)
     return new_blog
+
+
+
+# _________________ READING FROM THE DATABASE _________________________
+
+@app.get('/blog')
+
+def get_blog(db: Session = Depends(get_db)):
+    db.get()
+    return db
+    
