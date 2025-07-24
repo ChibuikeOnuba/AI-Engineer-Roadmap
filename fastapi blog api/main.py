@@ -7,6 +7,11 @@ app = FastAPI()
 
 models.Base.metadata.create_all(engine)
 
+@app.get('/')
+
+def demo_page():
+    return {'This is a demo page, got to http://127.0.0.1:8000/docs to use the interact with the FastAPI'}
+
 def get_db():
     db = SessionLocal()
     try:
