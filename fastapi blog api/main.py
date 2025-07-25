@@ -54,6 +54,7 @@ def get_sinlge_blog(id, response:Response, db: Session = Depends(get_db)):
         # response.status_code = status.HTTP_404_NOT_FOUND
         # return {f'Blog with ID - {id} does not exist'}
 
-        raise HTTPException
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
+                            detail=f'Blog with ID - {id} does not exist')
 
     return blog
