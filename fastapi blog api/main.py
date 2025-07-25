@@ -45,5 +45,8 @@ def get_blog(db: Session = Depends(get_db)):
 
 # query blogs from ID
 
-@app.get('/blog/{id}', status_code=status.HTTP_404_NOT_FOUND)
+@app.get('/returnBlog')
 
+def get_sinlge_blog(id, db: Session = Depends(get_db)):
+    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
+    return blog
