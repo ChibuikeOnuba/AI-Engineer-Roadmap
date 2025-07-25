@@ -47,13 +47,3 @@ def get_blog(db: Session = Depends(get_db)):
 
 @app.get('/blog/{id}', status_code=status.HTTP_404_NOT_FOUND)
 
-def get_single_blog(id, response: Response, db: Session = Depends(get_db)):
-    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
-    if not blog:
-        
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
-                            detail=f'Blog with ID {id} does not exist')
-
-        # response.status_code = status.HTTP_404_NOT_FOUND
-        # return {'details': f'Blog with ID {id} does not exist'}
-    return blog
