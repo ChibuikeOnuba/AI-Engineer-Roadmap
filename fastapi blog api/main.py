@@ -58,3 +58,17 @@ def get_sinlge_blog(id, response:Response, db: Session = Depends(get_db)):
                             detail=f'Blog with ID - {id} does not exist')
 
     return blog
+
+
+
+# _________________ DELETING FROM THE DATABASE _________________________
+
+@app.delete('/blog/{id}', status_code=status.HTTP_204_NO_CONTENT)
+
+def delete(id, db: Session = Depends(get_db)):
+
+    db.query(models.Blog).filter(models.Blog.id == 
+                                 id).delete(synchronize_session=False)
+    db.commit()
+    
+    return 'Done'
