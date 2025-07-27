@@ -5,7 +5,9 @@ from sqlalchemy.orm import Session
 
 app = FastAPI()
 
+# calling the database engine into the application
 models.Base.metadata.create_all(engine)
+
 
 @app.get('/')
 
@@ -72,3 +74,7 @@ def delete(id, db: Session = Depends(get_db)):
     db.commit()
     
     return 'Done'
+
+
+# ______________ UPDATING A RECORD ON THE DATABASE _______________________
+
