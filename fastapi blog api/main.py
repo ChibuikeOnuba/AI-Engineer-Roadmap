@@ -69,8 +69,10 @@ def get_sinlge_blog(id, response:Response, db: Session = Depends(get_db)):
 
 def delete(id, db: Session = Depends(get_db)):
 
-    db.query(models.Blog).filter(models.Blog.id == 
+    blog = db.query(models.Blog).filter(models.Blog.id == 
                                  id).delete(synchronize_session=False)
+    if not blog:
+        raise HTTPException(status_code = status.htt)
     db.commit()
     
     return 'Done'
