@@ -69,9 +69,9 @@ def get_sinlge_blog(id, response:Response, db: Session = Depends(get_db)):
 
 def delete(id, db: Session = Depends(get_db)):
 
-    blog = db.query(models.Blog).filter(models.Blog.id == id)
-    if not blog.first():
-        raise HTTPException(status_code = status.HTTP_204_NO_CONTENT, 
+    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
+    if not blog:
+        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, 
                             detail=f'Blog with id {id} not found in Database')
     
     db.delete(blog)
