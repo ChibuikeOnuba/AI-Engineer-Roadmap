@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import FastAPI, Depends, Response, status, HTTPException
 import schema, models
 from database import engine, SessionLocal
@@ -38,7 +39,7 @@ def create_blog(request:schema.model, db: Session = Depends(get_db)):
 
 # query all blogs
 
-@app.get('/blog')
+@app.get('/blog', response_model=List[schema.ShowBlog])
 
 def get_blog(db: Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
@@ -47,7 +48,7 @@ def get_blog(db: Session = Depends(get_db)):
 
 # query blogs with ID
 
-@app.get('/returnBlog')
+@app.get('/returnBlog/{id}', response_model=schema.ShowBlog)
 
 def get_sinlge_blog(id, response:Response, db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
