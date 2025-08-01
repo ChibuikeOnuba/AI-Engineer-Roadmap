@@ -9,7 +9,7 @@ class model(BaseModel):
     conclusion: Optional[str] = None
 
 # ______________RESPONSE MODEL_____________________
-class ShowBlog(BaseModel):
+class ShowBlog(model):
     title: str
 
     class Config():
