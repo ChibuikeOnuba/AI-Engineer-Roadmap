@@ -9,8 +9,8 @@ class model(BaseModel):
     conclusion: Optional[str] = None
 
 # ______________RESPONSE MODEL_____________________
-class ShowBlog(model):
+class ShowBlog(BaseModel):
     title: str
 
     class Config():
-        orm_mode = True
+        orm_mode = True 
