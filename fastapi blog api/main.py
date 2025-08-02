@@ -99,3 +99,8 @@ def update(id, request:schema.model, db: Session = Depends(get_db)):
 
 
 # ______________ CREATING A NEW USER _______________________
+
+@app.post('/user')
+
+def create_user(request:schema.User):
+    new_user = models.User
