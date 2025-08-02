@@ -94,3 +94,8 @@ def update(id, request:schema.model, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(blog)
     return 'Done'
+
+
+
+
+# ______________ CREATING A NEW USER _______________________
