@@ -12,4 +12,12 @@ class Blog(Base):
     # To add a timestamp to the database record
     # created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+class User(Base):
+
+    __tablename__ = "user"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(str)
+    email = Column(str)
+    password = Column(str)
+
 
