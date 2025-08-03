@@ -102,5 +102,9 @@ def update(id, request:schema.model, db: Session = Depends(get_db)):
 
 @app.post('/user')
 
-def create_user(request:schema.User):
-    new_user = models.User
+def create_user(request:schema.User,db: Session=Depends(get_db)):
+    new_user = models.User(name = request.name, email = request.email, password = request.password)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
