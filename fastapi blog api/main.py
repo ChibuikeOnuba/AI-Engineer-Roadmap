@@ -3,7 +3,9 @@ from fastapi import FastAPI, Depends, Response, status, HTTPException
 import schema, models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
+from hashing import Hash
+# from passlib.context import CryptContext //a class created for this.
+
 
 app = FastAPI()
 
@@ -101,16 +103,12 @@ def update(id, request:schema.model, db: Session = Depends(get_db)):
 
 # ______________ CREATING A NEW USER _______________________
 
-hasher = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# hasher = CryptContext(schemes=["bcrypt"], deprecated="auto") //a class created for this.
 
 @app.post('/user')
 def create_user(request:schema.User,db: Session=Depends(get_db)):
-    hsh_pwd = hasher.hash(request.password)
-    new_user = models.User(name = request.name, email = request.email, password = hsh_pwd)
+    new_user = models.User(name = request.name, email = request.email, password = Hash.bcrypt(request.password))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     return new_user
-
-
-# ______________ USER PASSWORD ENCRYPTION _______________________
