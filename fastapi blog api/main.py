@@ -105,10 +105,12 @@ def update(id, request:schema.model, db: Session = Depends(get_db)):
 
 # hasher = CryptContext(schemes=["bcrypt"], deprecated="auto") //a class created for this.
 
-@app.post('/user')
+@app.post('/user', response_model=schema.ShowUser)
 def create_user(request:schema.User,db: Session=Depends(get_db)):
     new_user = models.User(name = request.name, email = request.email, password = Hash.bcrypt(request.password))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     return new_user
+
+
