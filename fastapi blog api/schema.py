@@ -3,17 +3,11 @@ from pydantic import BaseModel
 
 
 class model(BaseModel):
-    id: int
     title: str
     body: str
     conclusion: Optional[str] = None
 
 # ______________RESPONSE MODEL_____________________
-class ShowBlog(BaseModel):
-    title: str
-
-    class Config():
-        orm_mode = True 
 
     
 class User(BaseModel):
@@ -24,3 +18,15 @@ class User(BaseModel):
 class ShowUser(BaseModel):
     name: str
     email: str
+
+    class Config():
+        orm_mode = True 
+
+
+class ShowBlog(BaseModel):
+    title: str
+    body: str
+    user: ShowUser
+
+    class Config():
+        orm_mode = True 
