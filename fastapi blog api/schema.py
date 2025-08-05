@@ -24,6 +24,7 @@ class ShowUser(BaseModel):
 
 
 class ShowBlog(BaseModel):
+    id: int
     title: str
     body: str
     user: Optional[ShowUser]
