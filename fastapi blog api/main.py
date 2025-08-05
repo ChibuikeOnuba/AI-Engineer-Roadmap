@@ -1,9 +1,10 @@
 from typing import List
-from fastapi import FastAPI, Depends, Response, status, HTTPException
+from fastapi import FastAPI, Depends, Response, status, HTTPException, APIRouter
 import schema, models
-from database import engine, SessionLocal
+from database import engine, SessionLocal, get_db
 from sqlalchemy.orm import Session
 from hashing import Hash
+from routers import blog, user
 # from passlib.context import CryptContext //a class created for this.
 
 
@@ -18,23 +19,10 @@ models.Base.metadata.create_all(engine)
 def demo_page():
     return {'This is a demo page, got to http://127.0.0.1:8000/docs to use the interact with the FastAPI'}
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
-# _________________ POSTING TO THE DATABASE _________________________
 
-@app.post('/blog', status_code = status.HTTP_201_CREATED, tags =['blog'])
+app.include_router(blog.router)
 
-def create_blog(request:schema.model, db: Session = Depends(get_db)):
-    new_blog =  models.Blog(title=request.title, body=request.body)
-    db.add(new_blog)
-    db.commit()
-    db.refresh(new_blog)
-    return new_blog
 
 
 

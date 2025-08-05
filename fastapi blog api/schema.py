@@ -26,7 +26,7 @@ class ShowUser(BaseModel):
 class ShowBlog(BaseModel):
     title: str
     body: str
-    user: ShowUser
+    user: Optional[ShowUser]
 
     class Config():
         orm_mode = True 
