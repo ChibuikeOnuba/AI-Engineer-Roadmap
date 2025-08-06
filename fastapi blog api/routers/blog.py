@@ -3,83 +3,55 @@ import models, schema
 from sqlalchemy.orm import Session
 import database, models
 from typing import List
+from repo import blog
 
 
 get_db = database.get_db
 
 
 
-router = APIRouter()
+router = APIRouter(
+    tags=['Blogs'],
+    prefix='/blog'
+)
 
-# _________________ POSTING TO THE DATABASE _________________________
+# ____________________________ POSTING TO THE DATABASE ____________________________________
 
-@router.post('/blog', status_code = status.HTTP_201_CREATED, tags =['blog'])
+@router.post('/', status_code = status.HTTP_201_CREATED, response_model=schema.ShowBlog)
 
 def create_blog(request:schema.model, db: Session = Depends(get_db)):
-    new_blog =  models.Blog(title=request.title, body=request.body)
-    db.add(new_blog)
-    db.commit()
-    db.refresh(new_blog)
-    return new_blog
+    return blog.create(request,db)
 
 
 
-# _________________ READING FROM THE DATABASE _________________________
+# _____________________________ READING FROM THE DATABASE _____________________________________
 
 # query all blogs
-
-@router.get('/blog', response_model=List[schema.ShowBlog], tags =['blog'])
+@router.get('/', response_model=List[schema.ShowBlog])
 
 def get_blog(db: Session = Depends(get_db)):
-    blogs = db.query(models.Blog).all()
-    return blogs
+    return blog.get_all(db)
     
 
 # query blogs with ID
-
-@router.get('/returnBlog/{id}', response_model=schema.ShowBlog, tags =['blog'])
+@router.get('/returnBlog/{id}', response_model=schema.ShowBlog)
 
 def get_sinlge_blog(id, db: Session = Depends(get_db)):
-    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
-    if not blog:
-        # _____ old method _____________
-        # response.status_code = status.HTTP_404_NOT_FOUND
-        # return {f'Blog with ID - {id} does not exist'}
-
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
-                            detail=f'Blog with ID - {id} does not exist')
-
-    return blog
+    return blog.get_id(id, db)
 
 
 
-# _________________ DELETING FROM THE DATABASE _________________________
+# ____________________________ DELETING FROM THE DATABASE ____________________________________
 
-@router.delete('/blog/{id}', tags =['blog'])
+@router.delete('/{id}')
 
 def delete(id, db: Session = Depends(get_db)):
-
-    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
-    if not blog:
-        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, 
-                            detail=f'Blog with id {id} not found in Database')
-    
-    db.delete(blog)
-    db.commit()
-    return 'Done'
+    return blog.delete(id, db)
 
 
-# ______________ UPDATING A RECORD ON THE DATABASE _______________________
+# _________________________ UPDATING A RECORD ON THE DATABASE __________________________________
 
-@router.put('/blog/{id}', status_code=status.HTTP_202_ACCEPTED, tags =['blog'])
+@router.put('/{id}', status_code=status.HTTP_200_OK)
 
 def update(id, request:schema.model, db: Session = Depends(get_db)):
-    blog = db.query(models.Blog).filter(models.Blog.id==id).first()
-    if not blog:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Blog with ID {id} not found")
-    blog.title = request.title
-    blog.body = request.body
-    db.commit()
-    db.refresh(blog)
-    return 'Done'
+    return blog.update(id,request, db)
