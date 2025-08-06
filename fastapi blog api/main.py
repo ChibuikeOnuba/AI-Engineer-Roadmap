@@ -2,7 +2,6 @@
 from fastapi import FastAPI
 import models
 from database import engine
-from sqlalchemy.orm import Session
 from routers import blog, user
 
 
