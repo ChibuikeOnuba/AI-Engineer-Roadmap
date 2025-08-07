@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 import models
 from database import engine
-from routers import blog, user
+from routers import blog, user, login
 
 
 
@@ -19,5 +19,7 @@ def demo_page():
 
 
 # __________ ROUTER FUNCTION ____________________-
+app.include_router(login.router)
 app.include_router(blog.router)
 app.include_router(user.router)
+
