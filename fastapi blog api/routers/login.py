@@ -3,10 +3,11 @@ from sqlalchemy.orm import Session
 import schema, database, models, hashing
 
 router = APIRouter(
-    tags=['Authentication']
+    tags=['Authentication'],
+    prefix='/login'
 )
 
-@router.post('/login')
+@router.post('/')
 
 def login(request:schema.login, db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == request.username).first()
