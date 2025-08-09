@@ -1,4 +1,4 @@
-from jose import JWTError, jwt
+from jose import jwt
 import secrets
 from typing import Optional
 from datetime import datetime, timedelta
