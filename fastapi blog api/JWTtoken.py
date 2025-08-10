@@ -19,6 +19,7 @@ def create_access_token(data:dict, expires_delta: Optional[timedelta] = None):
 
     encoded_jwt = jwt.encode(to_encode, secret_key, algorithm=algorithm)
 
+
 if __name__ == "__main__":
     print(secret_key)
 
