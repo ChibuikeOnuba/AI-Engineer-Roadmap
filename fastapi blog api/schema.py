@@ -20,7 +20,7 @@ class ShowUser(BaseModel):
     email: str
 
     class Config():
-        orm_mode = True 
+        from_attributes = True 
 
 
 class ShowBlog(BaseModel):
@@ -30,7 +30,7 @@ class ShowBlog(BaseModel):
     user: Optional[ShowUser]
 
     class Config():
-        orm_mode = True 
+        from_attributes = True 
 
 
 class login(BaseModel):
