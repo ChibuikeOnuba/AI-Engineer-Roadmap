@@ -19,3 +19,13 @@ def get(id:int, db:Session):
                             detail=f'User with ID - {id} not found')
 
     return user
+
+def remove_user(id:str, db:Session):
+    user = db.query(models.User).filter(models.User.email == id).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'User with id - {id} not found')
+    db.delete(user)
+    db.commit()
+    
+    return 'Deleted Successfully'

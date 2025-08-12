@@ -31,3 +31,10 @@ def create_user(request:schema.User,db: Session=Depends(get_db)):
 
 def get_user(id:int, db: Session = Depends(get_db)):
     return user.get(id, db)
+
+# ______________ DELETING A USER _______________________
+
+@router.delete('/{id}')
+
+def remove_user(id:str, db:Session=Depends(get_db)):
+    return user.remove_user(id, db)
