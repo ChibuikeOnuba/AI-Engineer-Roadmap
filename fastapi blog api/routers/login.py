@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 import schema, database, models, hashing, JWTtoken
 from datetime import datetime,timedelta
+from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter(
     tags=['Authentication'],
@@ -12,7 +13,7 @@ access_token_expiration_mins = 30
 
 @router.post('/')
 
-def login(request:schema.login, db: Session = Depends(database.get_db)):
+def login(request:OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == request.username).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
