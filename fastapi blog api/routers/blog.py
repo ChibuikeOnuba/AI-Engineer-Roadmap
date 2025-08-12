@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Depends
-import models, schema
+import models, schema, Oauth
 from sqlalchemy.orm import Session
 import database, models
 from typing import List
@@ -19,7 +19,7 @@ router = APIRouter(
 
 @router.post('/', status_code = status.HTTP_201_CREATED, response_model=schema.ShowBlog)
 
-def create_blog(request:schema.model, db: Session = Depends(get_db)):
+def create_blog(request:schema.model, db: Session = Depends(get_db), current_user: schema.User=Depends(Oauth.get_current_user)):
     return blog.create(request,db)
 
 
@@ -29,14 +29,14 @@ def create_blog(request:schema.model, db: Session = Depends(get_db)):
 # query all blogs
 @router.get('/', response_model=List[schema.ShowBlog])
 
-def get_blog(db: Session = Depends(get_db)):
+def get_blog(db: Session = Depends(get_db), current_user: schema.User=Depends(Oauth.get_current_user)):
     return blog.get_all(db)
     
 
 # query blogs with ID
 @router.get('/returnBlog/{id}', response_model=schema.ShowBlog)
 
-def get_sinlge_blog(id, db: Session = Depends(get_db)):
+def get_sinlge_blog(id, db: Session = Depends(get_db), current_user: schema.User=Depends(Oauth.get_current_user)):
     return blog.get_id(id, db)
 
 
@@ -45,7 +45,7 @@ def get_sinlge_blog(id, db: Session = Depends(get_db)):
 
 @router.delete('/{id}')
 
-def delete(id, db: Session = Depends(get_db)):
+def delete(id, db: Session = Depends(get_db), current_user: schema.User=Depends(Oauth.get_current_user)):
     return blog.delete(id, db)
 
 
@@ -53,5 +53,5 @@ def delete(id, db: Session = Depends(get_db)):
 
 @router.put('/{id}', status_code=status.HTTP_200_OK)
 
-def update(id, request:schema.model, db: Session = Depends(get_db)):
+def update(id, request:schema.model, db: Session = Depends(get_db), current_user: schema.User=Depends(Oauth.get_current_user)):
     return blog.update(id,request, db)
