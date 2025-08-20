@@ -16,7 +16,7 @@
 
 ---
 
-## 🧠 What You’ll Learn
+## 🧠 What we did
 
 This project follows a **step-by-step** approach to build a fully functioning API, covering the following concepts:
 
@@ -106,9 +106,3 @@ FastAPI combines speed, type safety, and modern development practices to make bu
 This project is based on the excellent [FastAPI Course by Bitfumes](https://www.youtube.com/watch?v=0sOvCWFmrtA). Special thanks to the creator for such a structured walkthrough.
 
 ---
-
-## 📌 Final Note
-
-Whether you're building your first API or refining your backend skills, this project is a great way to understand how modern APIs are built with Python.
-
-Ready to ship. Ready to scale. Ready to learn. ⚙️
